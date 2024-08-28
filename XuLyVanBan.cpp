@@ -4,49 +4,49 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
+bool check(string s){
+	if(s[s.size() - 1] == '.' || s[s.size() - 1] == '?' || s[s.size() - 1] == '!') return true;
+	return false;
+}
+
 string chuanhoa(string s){
-	for(int i = 0; i < s.size(); i++){
-		s[i] = tolower(s[i]);
+	for(auto &x : s){
+		x = tolower(x);
 	}
 	return s;
 }
 
-void solve(string s){
-	stringstream kk(s);
-	string word;
+int main(){
 	vector<string> vt;
-	while(kk >> word){
-		vt.push_back(word);
-	}
-	vt[0][0] = toupper(vt[0][0]);
-	for(int i = 0; i < vt.size(); i++){
-		cout << vt[i];
-		if(i != (vt.size()-1)){
-			cout << " ";
+	string s;
+	int pos = 0;
+	while(cin >> s){
+		s = chuanhoa(s);
+		++pos;
+		if(pos == 1) s[0] = toupper(s[0]);
+		if(check(s)){
+			s.erase(s.size() - 1);
+			cout << s << endl;
+			pos = 0;
+		}
+		else{
+			cout << s << " ";
 		}
 	}
-	cout << endl;
 }
 
-int main(){
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	string s;
-	vector<string> vt;
-	while(cin >> s){
-		vt.push_back(chuanhoa(s));
-	}
-	string x = "";
-	for(auto c : vt){
-		x += c + " ";
-	}
-	for(int i = 0; i < x.size(); i++){
-		if(x[i] == '!' || s[i] == '?'){
-			x[i] = '.';
-		}
-	}
-	stringstream ss(x);
-	string token;
-	while(getline(ss, token, '.')){
-		solve(token);
-	}
-}
+//░░░░░░░░░░░░░░░░░░░░░░█████████
+//░░███████░░░░░░░░░░███▒▒▒▒▒▒▒▒███
+//░░█▒▒▒▒▒▒█░░░░░░░███▒▒▒▒▒▒▒▒▒▒▒▒▒███
+//░░░█▒▒▒▒▒▒█░░░░██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+//░░░░█▒▒▒▒▒█░░░██▒▒▒▒▒██▒▒▒▒▒▒██▒▒▒▒▒███
+//░░░░░█▒▒▒█░░░█▒▒▒▒▒▒████▒▒▒▒████▒▒▒▒▒▒██
+//░░░█████████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+//░░░█▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒██
+//░██▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒██▒▒▒▒▒▒▒▒▒▒██▒▒▒▒██
+//██▒▒▒███████████▒▒▒▒▒██▒▒▒▒▒▒▒▒██▒▒▒▒▒██
+//█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒████████▒▒▒▒▒▒▒██
+//██▒▒▒▒▒▒▒▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+//░█▒▒▒███████████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██
+//░██▒▒▒▒▒▒▒▒▒▒████▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒█
+//░░████████████░░░█████████████████
