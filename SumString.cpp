@@ -4,30 +4,64 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+string Sum(string a, string b){
+	int len = max(a.size(), b.size());
+	while(a.size() < len){
+		a = "0" + a;
+	}
+	while(b.size() < len){
+		b = "0" + b;
+	}
+	if(a < b) swap(a,b);
+	reverse(a.begin(), a.end());
+	reverse(b.begin(), b.end());
+	string S = "";
+	int carry = 0;
+	for(int i = 0; i < len; i++){
+		int t = (a[i] - '0') + (b[i] - '0') + carry;
+		S += to_string(t % 10);
+		carry = t / 10;
+	}
+	if(carry){
+		S += to_string(carry);
+	}		
+	reverse(S.begin(), S.end());
+	return S;
+}
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+bool check(string a, int pos, int len1, int len2){
+	string s1 = a.substr(pos, len1);
+	string s2 = a.substr(pos + len1, len2);
+	string s = Sum(s1, s2);
+	if((s.size() + len1 + len2 + pos) > a.size()) return false;
+	if(s == a.substr(pos + len1 + len2, s.size())){
+		if(pos + len1 + len2 + s.size() == a.size()) return true;
+		return check(a, pos + len1, len2, s.size());
+	}
+	return false;
 }
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int TC;
+	cin >> TC;
+	while(TC--){
+		string a;
+		cin >> a;
+		bool ok = true;
+		for(int len1 = 1; len1 < a.size(); len1++){
+			for(int len2 = 1; len2 <= a.size() - len1; len2++){
+				if(check(a, 0, len1, len2)){
+					cout << "Yes" << endl;
+					ok = false;
+					break;
+				}
+			}
+		}
+		if(ok){
+			cout << "No" << endl;
+		}
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

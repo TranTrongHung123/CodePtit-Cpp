@@ -4,30 +4,39 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
+int a[205][205];
+int prefix[205][205];
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int t;
+	cin >> t;
+	while(t--){
+		memset(prefix, 0, sizeof(prefix));
+		int n, m;
+		cin >> n >> m;
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				cin >> a[i][j];
+			}
+		}
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				prefix[i][j] = a[i][j] + prefix[i][j-1] + prefix[i-1][j] - prefix[i-1][j-1];
+			}
+		}
+		int res = -1e9;
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				for(int k = i; k <= n; k++){
+					for(int h = j; h <= m; h++){
+						res = max(res, prefix[k][h] - prefix[k][j-1] - prefix[i-1][h] + prefix[i-1][j-1]);
+					}
+				}
+			}
+		}
+		cout << res << endl;
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

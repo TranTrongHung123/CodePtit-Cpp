@@ -4,22 +4,20 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
+int n, k;
+int a[50][50];
 int dx[2] = {1, 0};
 int dy[2] = {0, 1};
-int a[205][205];
-int n, k;
-int sum = a[1][1], cnt = 0;
+int cnt, sum;
 
 void Try(int i, int j){
-	if(i == n && j == n){
-		if(sum == k){
-			++cnt;
-		}
+	if(i == (n-1) && j == (n-1) && sum == k){
+		++cnt;
 	}
 	for(int k = 0; k < 2; k++){
 		int i1 = i + dx[k];
 		int j1 = j + dy[k];
-		if(i1 >= 1 && j1 >= 1 && i1 <= n && j1 <= n){
+		if(i1 >= 0 && i1 <= n-1 && j1 >= 0 && j1 <= n-1){
 			sum += a[i1][j1];
 			Try(i1,j1);
 			sum -= a[i1][j1];
@@ -28,17 +26,18 @@ void Try(int i, int j){
 }
 
 int main(){
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	int t;
 	cin >> t;
 	while(t--){
 		cin >> n >> k;
-		for(int i = 1; i <= n; i++){
-			for(int j = 1; j <= n; j++){
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < n; j++){
 				cin >> a[i][j];
 			}
 		}
-		Try(1,1);
+		sum = a[0][0];
+		cnt = 0;
+		Try(0,0);
 		cout << cnt << endl;
 	}
 }

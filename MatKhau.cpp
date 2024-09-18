@@ -4,30 +4,31 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+bool cmp(string a, string b){
+	return a.size() < b.size();
 }
 
 int main(){
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	int n;
 	cin >> n;
-	sinhvien a[n];
+	string a[n];
 	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+		cin >> a[i];
 	}
 	sort(a, a + n, cmp);
+	int cnt = 0;
 	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
+		for(int j = i+1; j < n; j++){
+			if(a[i] == a[j]){
+				cnt += 2;
+			}
+			else if(a[j].find(a[i]) != string::npos){
+				++cnt;
+			}
+		}
+	}
+	cout << cnt;
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

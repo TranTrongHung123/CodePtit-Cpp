@@ -23,11 +23,9 @@ int main(){
 			dq.push_front(tmp);
 		}
 		vector<int> vt;
-		for(auto x : dq){
-			vt.push_back(x);
-		}
-		for(int i = vt.size() - 1; i >= 0; i--){
-			cout << vt[i] << " ";
+		while(!dq.empty()){
+			cout << dq.back() << " ";
+			dq.pop_back();
 		}
 		cout << endl;
 	}

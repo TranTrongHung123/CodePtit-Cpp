@@ -4,30 +4,53 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+// Catalan(n) = (2n)! / (n! * (n+1)!) = (2n * (2n-1) * ... * (n+2)) / n!
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+string Tich(string s, int n){
+	string res(s.size(), '0');
+	int carry = 0;
+	for(int i = s.size()-1; i >= 0; i--){
+		int x = (s[i] - '0') * n + carry;
+		res[i] = (x % 10) + '0';
+		carry = x / 10;
+	}
+	if(carry){
+		res = to_string(carry) + res;
+	}
+	return res;
+}
+
+string Catalan(short int n){
+	vector<int> Tu_So;
+	for(int i = n+2; i <= 2*n; i++){
+		Tu_So.push_back(i);
+	}
+	for(int i = 2; i <= n; i++){
+		int tmp = i;
+		for(int j = 0; j < Tu_So.size(); j++){
+			int gcd = __gcd(Tu_So[j], tmp);
+			tmp /= gcd;
+			Tu_So[j] /= gcd;
+			if(tmp != 1){
+				continue;
+			}
+			else{
+				break;
+			}
+		}
+	}
+	string res = "1";
+	for(auto x : Tu_So){
+		res = Tich(res, x);
+	}
+	return res;
 }
 
 int main(){
-	int n;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	short int n;
 	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
-	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
+	cout << Catalan(n + 1);
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

@@ -11,14 +11,16 @@ int main(){
 	while(t--){
 		string s;
 		cin >> s;
-		vector<char> vt;
+		vector<pair<char,int>> vt;
+		int res = 0;
 		for(int i = 0; i < s.size(); i++){
-			vt.push_back(s[i]);
-			while(vt.size() >= 3 && vt[vt.size()-1] == '0' && vt[vt.size()-2] == '0' && vt[vt.size()-3] == '1'){
+			vt.push_back({s[i], i});
+			while(vt.size() >= 3 && vt[vt.size()-1].first == '0' && vt[vt.size()-2].first == '0' && vt[vt.size()-3].first == '1'){
 				vt.pop_back();
 				vt.pop_back();
 				vt.pop_back();
 			}
+			res = max(res, i - vt.back().second);
 		}
 		cout << s.size() - vt.size() << endl;
 	}

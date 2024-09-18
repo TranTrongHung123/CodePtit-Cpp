@@ -4,30 +4,32 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+// s1 : tong cac phan tu tap 1, s2 : tong cac phan tu tap 2
+// s1 + s2 = n*(n+1)/2 = s
+// s2 - s1 = m
+// => s2 = (s + m) / 2 
+// => s1 = s2 - m
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+bool check(ll n, ll m){
+	ll s = n * (n + 1) / 2;
+	ll s2 = (s + m) / 2;
+	ll s1 = s2 - m;
+	if(s1 + s2 == s && s2 - s1 == m && __gcd(s1,s2) == 1){
+		return true;
+	}
+	return false;
 }
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int t;
+	cin >> t;
+	while(t--){
+		ll n, m;
+		cin >> n >> m;
+		if(check(n,m)) cout << "Yes" << endl;
+		else cout << "No" << endl;
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

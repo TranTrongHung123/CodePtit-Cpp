@@ -4,30 +4,33 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
-
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int t;
+	cin >> t;
+	while(t--){
+		int n;
+		cin >> n;
+		int a[n];
+		for(auto &x : a) cin >> x;
+		vector<int> dp(n, 1e9); // Luu so buoc it nhat de den duoc dp[i]
+		dp[0] = 0; // Xuat phat tu o dau tien nen so buoc bat dau la 0
+		for(int i = 1; i < n; i++){
+			for(int j = 0; j < i; j++){
+				// a[j] : So buoc toi da co the nhay duoc tu vi tri j
+				// (i-j) : la khoang cach tu a[i] den a[j]
+				if(a[j] >= (i-j)){ // De tu vi tri j nhay den i thi so buoc can lon hon hoac bang khoang cach
+					dp[i] = min(dp[i], dp[j] + 1);
+				}
+			}
+		}
+		if(dp[n-1] == 1e9){
+			cout << -1 << endl;
+		}
+		else{
+			cout << dp[n-1] << endl;
+		}
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

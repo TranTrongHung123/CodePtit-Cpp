@@ -4,30 +4,65 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+int n, m;
+string a[50][50];
+
+void loang(int i, int j){
+	a[i][j] = "#";
+	for(int k = 0; k < 4; k++){
+		int i1 = i + dx[k];
+		int j1 = j + dy[k];
+		if(i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= m && a[i1][j1] == "O"){
+			loang(i1,j1);
+		}
+	}
 }
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	int TC;
+	cin >> TC;
+	while(TC--){
+		cin >> n >> m;
+//		cin.ignore();
+//		for(int i = 1; i <= n; i++){
+//			int j = 1;
+//			string s;
+//			getline(cin, s);
+//			stringstream ss(s);
+//			string token;
+//			while(ss >> token){
+//				a[i][j++] = token;
+//			}
+//		}
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				cin >> a[i][j];
+			}
+		}		
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				if(i == 1 or j == 1 or i == n or j == m){
+					if(a[i][j] == "O"){
+						loang(i,j);
+					}
+				}
+			}
+		}
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				if(a[i][j] == "#"){
+					cout << "O ";
+				}
+				else{
+					cout << "X ";
+				}
+			}
+			cout << endl;
+		}		
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

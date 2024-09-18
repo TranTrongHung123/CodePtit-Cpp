@@ -8,7 +8,7 @@ int main(){
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	int m, s;
 	cin >> m >> s;
-	if(s == 0 || (9*m < s)){
+	if((s == 0) || (9*m < s)){
 		cout << "-1 -1";
 	}
 	else{

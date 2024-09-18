@@ -4,30 +4,38 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
+ll a[500][500];
+ll dp1[500][500]; // Luu tong phan tu tren duong cheo chinh
+ll dp2[500][500]; // Luu tong phan tu tren duong cheo phu
 
 int main(){
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 	int n;
 	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			cin >> a[i][j];
+		}
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			dp1[i][j] = a[i][j] + dp1[i-1][j-1];
+		}
 	}	
+	for(int i = 1; i <= n; i++){
+		for(int j = 1; j <= n; j++){
+			dp2[i][j] = a[i][j] + dp2[i-1][j+1];
+		}
+	}
+	ll res = -1e18;
+	for(int i = n; i >= 1; i--){
+		for(int j = n; j >= 1; j--){
+			for(int k = 0; k < min(i,j); k++){
+				res = max(res, (dp1[i][j] - dp1[i-k-1][j-k-1]) - (dp2[i][j-k] - dp2[i-k-1][j+1]));
+			}
+		}
+	}
+	cout << res;
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

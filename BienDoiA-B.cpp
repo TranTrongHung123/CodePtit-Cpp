@@ -4,30 +4,33 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+int dpA[1000005]; // dpA[i] la so cach it nhat de bien S1...Si ve toan ky tu A
+int dpB[1000005]; // dpB[i] la so cach it nhat de bien S1...Si ve toan ky tu B
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
+// Co so quy hoach dong xau rong dpA[0] = dpB[0] = 0
+// Duyet qua toan bo chuoi S
+// + Neu S[i] == 'A' : Thi khong can bien doi vi tri nay nua ne so cach se la dpA[i] = dpA[i-1]
+// + Neu S[i] == 'B' : Se co 2 cach bien doi
+// - Cach 1 : Bien het S1...Si-1 ve A va cong 1 phep bien doi S[i] ve A
+// - Cach 2 : Bien het S1...Si-1 ve B va cong 1 phep bien doi toan bo day tu dau ve A
+// => chon cach nho hon trong 2 cach nay
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	string s;
+	cin >> s;
+	int len = s.size();
+	s = " " + s;
+	for(int i = 1; i <= len; i++){
+		if(s[i] == 'A'){
+			dpA[i] = dpA[i-1];
+			dpB[i] = 1 + min(dpA[i-1], dpB[i-1]);
+		}
+		else{
+			dpB[i] = dpB[i-1];
+			dpA[i] = 1 + min(dpA[i-1], dpB[i-1]);		
+		}
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
+	cout << dpA[len];
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

@@ -4,30 +4,30 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
-
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int t;
+	cin >> t;
+	while(t--){
+		string s;
+		int k;
+		cin >> s >> k;
+		int res = 0;
+		for(int i = 0; i < s.size(); i++){
+			int dis = 0;
+			int mark[256];
+			memset(mark, 0, sizeof(mark));
+			for(int j = i; j < s.size(); j++){
+				if(mark[s[j]] == 0){
+					++dis;
+				}
+				++mark[s[j]];
+				if(dis == k) ++res;
+				if(dis > k) break;
+			}
+		}
+		cout << res << endl;
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

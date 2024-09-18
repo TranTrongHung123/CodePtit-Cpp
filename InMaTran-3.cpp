@@ -4,30 +4,35 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
-
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
-}
-
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	int TC;
+	cin >> TC;
+	while(TC--){
+		int n, m;
+		cin >> n >> m;
+		int a[n+1][m+1];
+		vector<int> X[n+m];
+		for(int i = 1; i <= n; i++){
+			for(int j = 1; j <= m; j++){
+				cin >> a[i][j];
+				X[i+j-1].push_back(a[i][j]); // Cho cac phan tu vao duong cheo tuong ung
+			}
+		}
+		for(int stt = 1; stt <= n+m-1; stt++){	
+			if(stt % 2 == 1){
+				for(int idx = X[stt].size()-1; idx >= 0; idx--){
+					cout << X[stt][idx] << " ";
+				}
+			}
+			else{
+				for(int idx = 0; idx < X[stt].size(); idx++){
+					cout << X[stt][idx] << " ";
+				}				
+			}
+		}
+		cout << endl;
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████

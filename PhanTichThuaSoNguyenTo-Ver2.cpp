@@ -4,30 +4,57 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-struct sinhvien{
-	string msv, ten, lop;
-	double x1, x2, x3;
-};
+vector<ll> prime;
+vector<bool> is_prime(1e7, true);
 
-bool cmp(sinhvien a, sinhvien b){
-	return a.ten < b.ten;
+void sieve(){
+	is_prime[0] = is_prime[1] = false;
+	for(ll i = 2; i*i <= 1e7; i++){
+		if(is_prime[i]){
+			prime.push_back(i);
+			for(ll j = i*i; j <= 1e7; j += i){
+				is_prime[j] = false;
+			}
+		}
+	}
+	ll sqrtn = sqrt(1e7);
+	for(ll i = sqrtn + 1; i <= 1e7; i++){
+		if(is_prime[i]){
+			prime.push_back(i);
+		}
+	}
+}
+
+map<ll,ll> PhanTich(ll n){
+	map<ll,ll> res;
+	for(ll p : prime){
+		if(p * p > n){
+			break;
+		}
+		while(n % p == 0){
+			++res[p];
+			n /= p;
+		}
+	}
+	if(n > 1){
+		++res[n];
+	}
+	return res;
 }
 
 int main(){
-	int n;
-	cin >> n;
-	sinhvien a[n];
-	for(int i = 0; i < n; i++){
-		cin.ignore();
-		getline(cin, a[i].msv);
-		getline(cin, a[i].ten);
-		getline(cin, a[i].lop);
-		cin >> a[i].x1 >> a[i].x2 >> a[i].x3;
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	sieve();
+	int t;
+	cin >> t;
+	while(t--){
+		ll n;
+		cin >> n;
+		map<ll,ll> res = PhanTich(n);
+		for(auto x : res){
+			cout << x.first << " " << x.second << endl;
+		}		
 	}
-	sort(a, a + n, cmp);
-	for(int i = 0; i < n; i++){
-		cout << i + 1 << " " << a[i].msv << " " << a[i].ten << " " << a[i].lop << " " << fixed << setprecision(1) << a[i].x1 << " " << fixed << setprecision(1) << a[i].x2 << " " << fixed << setprecision(1) << a[i].x3 << endl;
-	}	
 }
 
 //░░░░░░░░░░░░░░░░░░░░░░█████████
