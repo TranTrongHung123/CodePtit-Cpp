@@ -4,39 +4,39 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-void Tich(string X, string Y){
-	vector<char> C(X.size() + Y.size(), '0');
-	reverse(X.begin(), X.end());
-	reverse(Y.begin(), Y.end());
-	for(int ix = 0; ix < X.size(); ix++){
-		int nho = 0;
-		for(int iy = 0; iy < Y.size(); iy++){
-			int x = (C[ix + iy] - '0') + nho + (X[ix] - '0') * (Y[iy] - '0');
-			nho = x / 10;
-			C[ix + iy] = (x % 10) + '0';
+string Nhan_Xau(string s1, string s2){
+	int len = s1.size() + s2.size();
+	vector<int> res(len, 0);
+	reverse(begin(s1), end(s1));
+	reverse(begin(s2), end(s2));
+	for(int i = 0; i < s1.size(); i++){
+		int carry = 0;
+		for(int j = 0; j < s2.size(); j++){
+			int x = (s1[i] - '0') * (s2[j] - '0') + carry + res[i + j];
+			res[i + j] = x % 10;
+			carry = x / 10;
 		}
-		if(nho){
-			C[ix + Y.size()] = nho + '0';
+		if(carry){
+			res[i + s2.size()] += carry;
 		}
 	}
-	int idx = C.size() - 1;
-	while(idx >= 1 && C[idx] == '0'){
-		--idx;
+	string s = "";
+	for(auto x : res){
+		s = to_string(x) + s;
 	}
-	for(int i = idx; i >= 0; i--){
-		cout << C[i];
+	while(s.size() > 1 && s[0] == '0'){
+		s.erase(0, 1);
 	}
+	return s;
 }
 
 int main(){
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	int t;
-	cin >> t;
-	while(t--){
-		string X, Y;
-		cin >> X >> Y;
-		Tich(X,Y);
-		cout << endl;
+	int TC;
+	cin >> TC;
+	while(TC--){
+		string s1, s2;
+		cin >> s1 >> s2;
+		cout << Nhan_Xau(s1, s2) << endl;
 	}
 }
 

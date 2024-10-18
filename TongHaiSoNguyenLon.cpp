@@ -4,32 +4,36 @@ using namespace std;
 typedef long long ll;
 const int mod = 1e9 + 7;
 
-string Sum(string s1, string s2){
+string Cong_Xau(string s1, string s2){
 	int len = max(s1.size(), s2.size());
-	while(s1.size() != len) s1 = "0" + s1;
-	while(s2.size() != len) s2 = "0" + s2;
-	if(s2 > s1) swap(s1,s2);
-	int nho = 0;
-	string s = "";
-	for(int i = s1.size()-1; i >= 0; i--){
-		int x = ((s1[i] - '0') + (s2[i] - '0') + nho);
-		s = to_string(x % 10) + s;
-		nho = x / 10;
+	while(s1.size() < len) s1 = "0" + s1;
+	while(s2.size() < len) s2 = "0" + s2;
+	string res = "";
+	int carry = 0;
+	for(int i = len-1; i >= 0; i--){
+		int x = (s1[i] - '0') + (s2[i] - '0') + carry;
+		if(x >= 10){
+			x -= 10;
+			carry = 1;
+		}
+		else{
+			carry = 0;
+		}
+		res = to_string(x) + res;
 	}
-	if(nho){
-		s = to_string(nho) + s;
+	if(carry){
+		res = to_string(carry) + res;
 	}
-	return s;
+	return res;
 }
 
 int main(){
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-	int t;
-	cin >> t;
-	while(t--){
+	int TC;
+	cin >> TC;
+	while(TC--){
 		string s1, s2;
 		cin >> s1 >> s2;
-		cout << Sum(s1,s2) << endl;
+		cout << Cong_Xau(s1, s2) << endl;
 	}
 }
 
