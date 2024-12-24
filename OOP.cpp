@@ -5,11 +5,11 @@ typedef long long ll;
 const int mod = 1e9 + 7;
 
 class SinhVien{
-	private : 
+	private: 
 		string ten, ngaysinh, lop;
 		double gpa;
 		static string tentruong; // Bien chung cho class
-	public :
+	public:
 		SinhVien(){ // Ham tao mac dinh khong tham so
 			cout << "Ham Tao" << endl;
 		}
@@ -46,7 +46,24 @@ class SinhVien{
 			s.gpa = a.gpa + b.gpa;
 			return s;
 		}
+		// Nap chong toan tu cong
+		
+		// friend PhanSo operator + (PhanSo a, PhanSo b);
+		
 };
+/*
+
+PhanSo operator + (PhanSo a, PhanSo b){
+	PhanSo t(1,1);
+	ll mau_chung = a.mau * b.mau;
+	ll tu_chung = a.tu * b.mau + a.mau * b.tu;
+	ll gcd = __gcd(mau_chung, tu_chung);
+	t.tu = tu_chung / gcd;
+	t.mau = mau_chung / gcd;
+	return t;
+}
+
+*/
 
 string SinhVien :: tentruong = "PTIT"; // Khoi tao ten truong cho tat ca sinh vien
 
